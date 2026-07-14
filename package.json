@@ -1,0 +1,47 @@
+{
+  "name": "serena-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "clean:next": "node ./scripts/clean-next.mjs",
+    "dev": "next dev",
+    "dev:fresh": "npm run clean:next && next dev",
+    "build": "next build",
+    "build:fresh": "npm run clean:next && next build",
+    "start": "next start",
+    "lint": "next lint",
+    "seed:articles": "npx tsx prisma/seed-articles.ts"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.42.2",
+    "lucide-react": "^1.24.0",
+    "next": "14.2.16",
+    "next-auth": "^4.24.7",
+    "pusher": "^5.3.4",
+    "pusher-js": "^8.5.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "recharts": "^3.9.2",
+    "resend": "^6.17.2",
+    "tailwind-merge": "^3.6.0"
+  },
+  "devDependencies": {
+    "@prisma/client": "^5.22.0",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.16",
+    "postcss": "^8",
+    "prisma": "^5.22.0",
+    "tailwindcss": "^3.4.1",
+    "tsx": "^4.23.0",
+    "typescript": "^5"
+  },
+  "prisma": {
+    "seed": "npx tsx prisma/seed.ts"
+  }
+}

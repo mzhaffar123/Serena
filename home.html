@@ -1,0 +1,15 @@
+
+              <pre>KONTOLLLL BANGET :+LU ANJINGGG
+                  .</pre>
+              <script>
+                async function check() {
+                  const res = await fetch(location.href).catch(() => ({}))
+
+                  if (res.status === 200) {
+                    location.reload()
+                  } else {
+                    setTimeout(check, 1000)
+                  }
+                }
+                check()
+              </script>

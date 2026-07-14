@@ -1,0 +1,117 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  PATIENT
+  COUNSELOR
+  ADMIN
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+model User {
+  id            String          @id @default(cuid())
+  name          String
+  email         String          @unique
+  password      String          // Hashed password
+  role          Role            @default(PATIENT)
+  photoUrl      String?         // Profile picture url
+  isVerified    Boolean         @default(false)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  
+  // Relations
+  counselorProfile CounselorProfile?
+  patientBookings  Booking[]         @relation("PatientBookings")
+  counselorBookings Booking[]        @relation("CounselorBookings")
+  moodEntries      MoodEntry[]
+  assessments      Assessment[]
+  articles         Article[]
+  sentMessages     Message[]
+}
+
+model CounselorProfile {
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  specialization String   // e.g., "Anxiety, Depresi, Hubungan"
+  bio            String   @db.Text
+  experienceYrs  Int      @default(0)
+  hourlyRate     Int      @default(0) // Rate in IDR
+  isAvailable    Boolean  @default(true)
+  rating         Float    @default(5.0)
+  availability   Json     // e.g. {"Senin": ["09:00", "14:00"], "Selasa": []}
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Booking {
+  id          String        @id @default(cuid())
+  patientId   String
+  patient     User          @relation("PatientBookings", fields: [patientId], references: [id], onDelete: Cascade)
+  counselorId String
+  counselor   User          @relation("CounselorBookings", fields: [counselorId], references: [id], onDelete: Cascade)
+  scheduledAt DateTime      // Appointment date and time
+  status      BookingStatus @default(PENDING)
+  notes       String?       @db.Text
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  
+  // Relations
+  messages    Message[]
+}
+
+model Message {
+  id         String   @id @default(cuid())
+  bookingId  String
+  booking    Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  senderId   String
+  sender     User     @relation(fields: [senderId], references: [id])
+  text       String   @db.Text
+  createdAt  DateTime @default(now())
+}
+
+model MoodEntry {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  moodScore Int      // 1-5 scale
+  note      String?  @db.Text
+  createdAt DateTime @default(now())
+}
+
+model Assessment {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String   @default("PHQ-9")
+  score     Int
+  result    String   // e.g. "Depresi Ringan"
+  answers   Json     // List of answers
+  createdAt DateTime @default(now())
+}
+
+model Article {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  content     String    @db.Text
+  summary     String    @db.Text
+  photoUrl    String?
+  authorId    String
+  author      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  publishedAt DateTime  @default(now())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}

@@ -1,0 +1,22 @@
+
+> serena-app@0.1.0 predev
+> npm run clean:next
+
+
+> serena-app@0.1.0 clean:next
+> node ./scripts/clean-next.mjs
+
+Cleaned .next cache
+
+> serena-app@0.1.0 dev
+> next dev
+
+ ⚠ Port 3000 is in use, trying 3001 instead.
+ ⚠ Port 3001 is in use, trying 3002 instead.
+ ⚠ Port 3002 is in use, trying 3003 instead.
+  ▲ Next.js 14.2.16
+  - Local:        http://localhost:3003
+  - Environments: .env
+
+ ✓ Starting...
+ ✓ Ready in 2.5s
