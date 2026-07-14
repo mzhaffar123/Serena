@@ -17,7 +17,7 @@ type SerenaHeaderProps = {
 
 export default function SerenaHeader({ items, rightSlot, logoHref = "/" }: SerenaHeaderProps) {
   return (
-    <header className="sticky top-0 z-50 border-b border-indigo-100/70 bg-white/90 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-indigo-100/30 bg-white/30 backdrop-blur-md">
       <div className="mx-auto flex h-24 w-full max-w-[1440px] items-center gap-3 px-4 lg:px-16">
         <div className="shrink-0 md:min-w-[220px] lg:min-w-[258px]">
           <BrandLogo
