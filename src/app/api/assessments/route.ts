@@ -3,6 +3,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 
+export const dynamic = "force-dynamic";
+
 const PHQ9_RESULTS = [
   { min: 0, max: 4, label: "Minimal atau tidak ada gejala depresi" },
   { min: 5, max: 9, label: "Gejala depresi ringan" },

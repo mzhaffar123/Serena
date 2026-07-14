@@ -5,6 +5,8 @@ import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { getAvailableTimesForDate, parseScheduledAt } from "@/lib/booking";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions);
